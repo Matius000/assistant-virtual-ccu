@@ -1,10 +1,8 @@
 // Todos los derechos reservados, Mateo Vanegas Giraldo #https://matius000.github.io/portafolio/ 
 function start() {
-
-
     if (!annyang) { } else { 
     annyang.setLanguage("es-CO")
-    annyang.start({ autoRestart: true, continuous: true });
+    annyang.start({ autoRestart: false, continuous: false });
     console.log("Listening...")
     annyang.addCommands(comandos);
     annyang.debug()
@@ -22,7 +20,7 @@ function start() {
     document.getElementById("txt").style.display = "none";
     setTimeout(() => {
         voz("saludo");
-    }, 1000)
+    }, 500)
  }
 }
 
@@ -33,22 +31,6 @@ annyang.addCallback('soundstart', function () {
 
 annyang.addCallback('result', function () {
     console.log('sound stopped');
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-    })
-
-    Toast.fire({
-        icon: 'info',
-        title: annyang.debug(),
-    })
 });
 
 
@@ -129,7 +111,7 @@ const comandos = {
         window.open("https://www.youtube.com/results?search_query=" + busqueda)
     },
 
-    "Roegelio salmona.": () => {
+    "Rogelio salmona.": () => {
         voz("rogelio");
     },
 
@@ -218,45 +200,46 @@ function voz(texto) {
             switch (texto) {
                 case "saludo":
                     who = saludo;
+                    annyang.abort();
                     saludo.play();
-                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(saludo.duration) * 1000);
+                        console.log("Parla")
+                    }, (saludo.duration) * 1000);
                     animation(saludo.duration);
                     break;
 
                 case "buenastardes":
                     who = buenastardes;
                     buenastardes.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(buenastardes.duration) * 1000);
+                    }, (buenastardes.duration) * 1000);
                     animation(buenastardes.duration);
                     break;
 
                 case "buenosdias":
                     who = buenosdias;
                     buenosdias.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(buenosdias.duration) * 1000);
+                    }, (buenosdias.duration) * 1000);
                     animation(buenosdias.duration);
                     break;
 
                 case "centrociencias":
                     who = centrociencias;
                     centrociencias.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(centrociencias.duration) * 1000);
+                    }, (centrociencias.duration) * 1000);
                     animation(centrociencias.duration);
                     setTimeout(() => {
                         question('centrociencias', centrociencias.duration * 1000)
@@ -266,66 +249,66 @@ function voz(texto) {
                 case "mateovanegas":
                     who = mateovanegas;
                     mateovanegas.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(mateovanegas.duration) * 1000);
+                    }, (mateovanegas.duration) * 1000);
                     animation(mateovanegas.duration);
                     break;
 
                 case "minombre":
                     who = minombre;
                     minombre.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(minombre.duration) * 1000);
+                    }, (minombre.duration) * 1000);
                     animation(minombre.duration);
                     break;
 
                 case "noentendi":
                     who = noentendi;
                     noentendi.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(noentendi.duration) * 1000);
+                    }, (noentendi.duration) * 1000);
                     animation(noentendi.duration);
                     break;
 
                 case "nodisponible":
                     who = nodisponible;
                     nodisponible.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(nodisponible.duration) * 1000);
+                    }, (nodisponible.duration) * 1000);
                     animation(nodisponible.duration);
                     break;
 
                 case "okdameunsegundo":
                     who = okdameunsegundo;
                     okdameunsegundo.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(okdameunsegundo.duration) * 1000);
+                    }, (okdameunsegundo.duration) * 1000);
                     animation(okdameunsegundo.duration);
                     break;
 
                 case "recorrido":
                     who = recorrido;
                     recorrido.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();;
-                    }, parseInt(recorrido.duration) * 1000);
+                    }, (recorrido.duration) * 1000);
                     setTimeout(() => {
                         window.open("http://ccusalmona.com/recorridoCCU/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=600,width=1300,height=1200");
                     }, 1000);
@@ -336,11 +319,11 @@ function voz(texto) {
                 case "rogelio":
                     who = rogelio;
                     rogelio.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(rogelio.duration) * 1000);
+                    }, (rogelio.duration) * 1000);
                     animation(rogelio.duration);
                     setTimeout(() => {
                         question('rogelio', rogelio.duration * 1000)
@@ -350,11 +333,11 @@ function voz(texto) {
                 case "soyunasistente":
                     who = soyunasistente;
                     soyunasistente.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(soyunasistente.duration) * 1000);
+                    }, (soyunasistente.duration) * 1000);
                     animation(soyunasistente.duration);
                     break;
 
@@ -362,11 +345,11 @@ function voz(texto) {
                     who = distrito;
                     distrito.play()
                     animation(distrito.duration);
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(distrito.duration) * 1000);
+                    }, (distrito.duration) * 1000);
                     setTimeout(() => {
                         window.open("https://drive.google.com/file/d/1UYa3klDOQHSQqslvgqskxNt9CaLbqlHA/view", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=600,width=1300,height=1200");
                     }, 2000)
@@ -379,11 +362,11 @@ function voz(texto) {
                     who = programacion;
                     programacion.play()
                     animation(programacion.duration);
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(programacion.duration) * 1000);
+                    }, (programacion.duration) * 1000);
                     setTimeout(() => {
                         window.open("https://drive.google.com/file/d/1rq5YmjYjmXemPJ6kV_ARqyB00MGSNy0T/view?usp=sharing", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=600,width=1300,height=1200");
                     }, 2000)
@@ -394,11 +377,11 @@ function voz(texto) {
                     who = reserva;
                     reserva.play()
                     animation(reserva.duration);
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(reserva.duration) * 1000);
+                    }, (reserva.duration) * 1000);
                     setTimeout(() => {
                         window.open("https://ccusalmona.com/reserva-de-espacios/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=600,width=1300,height=1200");
                     }, 2000)
@@ -409,11 +392,11 @@ function voz(texto) {
                     who = maker;
                     maker.play()
                     animation(maker.duration);
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(maker.duration) * 1000);
+                    }, (maker.duration) * 1000);
                     setTimeout(() => {
                         question('maker', maker.duration * 1000)
                     }, 5000);
@@ -424,22 +407,22 @@ function voz(texto) {
                     if (countf < 1) {
                         finalices.play()
                         animation(finalices.duration);
-                        annyang.pause();
+                        annyang.abort();
                         setTimeout(() => {
                             speaking = false;
                             annyang.resume();
-                        }, parseInt(finalices.duration) * 1000);
+                        }, (finalices.duration) * 1000);
                         countf++;
                     } else { }
                     break;
                 default:
                     who = noentendi;
                     noentendi.play()
-                    annyang.pause();
+                    annyang.abort();
                     setTimeout(() => {
                         speaking = false;
                         annyang.resume();
-                    }, parseInt(noentendi.duration) * 1000);
+                    }, (noentendi.duration) * 1000);
                     animation(noentendi.duration);
                     break;
             }
@@ -608,3 +591,30 @@ function question(question, time) {
         }
     }
 }
+
+var activo = true;
+var registrarInactividad = function () {
+    var t;
+    window.onload = reiniciarTiempo;
+    document.onmousemove = reiniciarTiempo;
+    document.onload = reiniciarTiempo;
+    document.onmousemove = reiniciarTiempo;
+    document.onmousedown = reiniciarTiempo;
+    document.ontouchstart = reiniciarTiempo;
+    document.onclick = reiniciarTiempo; 
+    document.onscroll = reiniciarTiempo;
+
+    function tiempoExcedido() {
+        activo = false;
+        registrarInactividad();
+        location.reload()
+    }
+
+    function reiniciarTiempo() {
+        clearTimeout(t);
+        t = setTimeout(tiempoExcedido, 60000)
+        activo = true;
+    }
+};
+
+registrarInactividad(); //Esto activa el contador
