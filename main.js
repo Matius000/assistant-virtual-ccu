@@ -1,13 +1,13 @@
 // Todos los derechos reservados, Mateo Vanegas Giraldo #https://matius000.github.io/portafolio/ 
 function start() {
 
-    /*  
-    if (annyang){}
+
+    if (!annyang) { } else { 
     annyang.setLanguage("es-CO")
-     annyang.start({ autoRestart: true, continuous: true });
-     console.log("Listening...")
-     annyang.addCommands(comandos);
-     annyang.debug() */
+    annyang.start({ autoRestart: true, continuous: true });
+    console.log("Listening...")
+    annyang.addCommands(comandos);
+    annyang.debug()
     document.getElementById("recorrido").style.visibility = "visible";
     document.getElementById("rogelio").style.visibility = "visible";
     document.getElementById("pregunta1").style.visibility = "visible";
@@ -23,16 +23,33 @@ function start() {
     setTimeout(() => {
         voz("saludo");
     }, 1000)
+ }
 }
 
 
-/* annyang.addCallback('soundstart', function () {
+annyang.addCallback('soundstart', function () {
     console.log("sound detected")
 });
 
 annyang.addCallback('result', function () {
     console.log('sound stopped');
-}); */
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    Toast.fire({
+        icon: 'info',
+        title: annyang.debug(),
+    })
+});
 
 
 function evento(cadena) {
@@ -65,24 +82,26 @@ function evento(cadena) {
 }
 
 
-/* const comandos = {
+const comandos = {
     //  COMANDOS DE VOZ
 
-    "(quién te) creó": () => {
+    "¿(Quién te) creo?": () => {
+        voz("mateovanegas");
+        window.open("https://matius000.github.io/portafolio/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=600,width=1300,height=1200");
+
+    },
+
+    "¿(Quién te) inventó?": () => {
         voz("mateovanegas");
     },
 
-    "(quién te) inventó": () => {
-        voz("mateovanegas");
-    },
-
-    "qué eres": () => {
+    "¿Qué eres?": () => {
         voz("soyunasistente");
     },
 
     // NOMBRE
 
-    "¿cuál es tu nombre": () => {
+    "¿Cuál es tu nombre?": () => {
         voz("minombre");
     },
 
@@ -100,25 +119,38 @@ function evento(cadena) {
 
     //
 
-    "busca *busqueda": busqueda => {
+    "Busca *busqueda.": busqueda => {
         voz("okdameunsegundo");
         window.open("https://www.google.com/search?q=" + busqueda)
     },
 
-    "quiero escuchar *busqueda": busqueda => {
+    "Quiero escuchar *busqueda.": busqueda => {
         voz("okdameunsegundo");
         window.open("https://www.youtube.com/results?search_query=" + busqueda)
     },
 
-    "Roegelio salmona": () => {
+    "Roegelio salmona.": () => {
         voz("rogelio");
+    },
+
+    "Recorrido virtual.": () => {
+        voz("recorrido");
+    },
+
+    
+    "Maker Space.": () => {
+        voz("maker");
+    },
+
+    "Maker (Space).": () => {
+        voz("maker");
     },
 
     "Saluda.": () => {
         voz("saludo");
     },
 
-    "Hola": () => {
+    "Hola.": () => {
         voz("saludo");
     },
 
@@ -126,19 +158,34 @@ function evento(cadena) {
         voz("buenastardes");
     },
 
-    "Buenos días": () => {
+    "Buenos días.": () => {
         voz("buenosdias");
     },
 
-    "Centro de ciencias": () => {
+    "Centro de ciencias.": () => {
         voz("centrociencias");
     },
 
     "Distrito salmona.": () => {
         voz("distrito");
-        console.log("Distrito")
     },
-} */
+
+    "Programación semanal.": () => {
+        voz("programacion");
+    },
+
+    "Programación (semanal).": () => {
+        voz("programacion");
+    },
+
+    "Reserva de espacios.": () => {
+        voz("reserva");
+    },
+
+    "(Reserva) de (espacios).": () => {
+        voz("reserva");
+    },
+}
 
 var countf = 0;
 var speaking = false;
@@ -161,6 +208,7 @@ function voz(texto) {
     const reserva = new Audio('voice/reserva.mp3')
     const programacion = new Audio('voice/programacion.mp3')
     const maker = new Audio('voice/maker.mp3')
+    const nodisponible = new Audio('voice/nodisponible.mp3')
 
 
     centrociencias.onloadeddata = function () {
@@ -171,8 +219,10 @@ function voz(texto) {
                 case "saludo":
                     who = saludo;
                     saludo.play();
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(saludo.duration) * 1000);
                     animation(saludo.duration);
                     break;
@@ -180,8 +230,10 @@ function voz(texto) {
                 case "buenastardes":
                     who = buenastardes;
                     buenastardes.play()
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(buenastardes.duration) * 1000);
                     animation(buenastardes.duration);
                     break;
@@ -189,8 +241,10 @@ function voz(texto) {
                 case "buenosdias":
                     who = buenosdias;
                     buenosdias.play()
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(buenosdias.duration) * 1000);
                     animation(buenosdias.duration);
                     break;
@@ -198,8 +252,10 @@ function voz(texto) {
                 case "centrociencias":
                     who = centrociencias;
                     centrociencias.play()
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(centrociencias.duration) * 1000);
                     animation(centrociencias.duration);
                     setTimeout(() => {
@@ -210,8 +266,10 @@ function voz(texto) {
                 case "mateovanegas":
                     who = mateovanegas;
                     mateovanegas.play()
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(mateovanegas.duration) * 1000);
                     animation(mateovanegas.duration);
                     break;
@@ -219,8 +277,10 @@ function voz(texto) {
                 case "minombre":
                     who = minombre;
                     minombre.play()
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(minombre.duration) * 1000);
                     animation(minombre.duration);
                     break;
@@ -228,17 +288,32 @@ function voz(texto) {
                 case "noentendi":
                     who = noentendi;
                     noentendi.play()
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(noentendi.duration) * 1000);
                     animation(noentendi.duration);
+                    break;
+
+                case "nodisponible":
+                    who = nodisponible;
+                    nodisponible.play()
+                    annyang.pause();
+                    setTimeout(() => {
+                        speaking = false;
+                        annyang.resume();
+                    }, parseInt(nodisponible.duration) * 1000);
+                    animation(nodisponible.duration);
                     break;
 
                 case "okdameunsegundo":
                     who = okdameunsegundo;
                     okdameunsegundo.play()
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(okdameunsegundo.duration) * 1000);
                     animation(okdameunsegundo.duration);
                     break;
@@ -246,8 +321,10 @@ function voz(texto) {
                 case "recorrido":
                     who = recorrido;
                     recorrido.play()
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();;
                     }, parseInt(recorrido.duration) * 1000);
                     setTimeout(() => {
                         window.open("http://ccusalmona.com/recorridoCCU/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=600,width=1300,height=1200");
@@ -259,8 +336,10 @@ function voz(texto) {
                 case "rogelio":
                     who = rogelio;
                     rogelio.play()
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(rogelio.duration) * 1000);
                     animation(rogelio.duration);
                     setTimeout(() => {
@@ -271,8 +350,10 @@ function voz(texto) {
                 case "soyunasistente":
                     who = soyunasistente;
                     soyunasistente.play()
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(soyunasistente.duration) * 1000);
                     animation(soyunasistente.duration);
                     break;
@@ -281,8 +362,10 @@ function voz(texto) {
                     who = distrito;
                     distrito.play()
                     animation(distrito.duration);
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(distrito.duration) * 1000);
                     setTimeout(() => {
                         window.open("https://drive.google.com/file/d/1UYa3klDOQHSQqslvgqskxNt9CaLbqlHA/view", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=600,width=1300,height=1200");
@@ -296,8 +379,10 @@ function voz(texto) {
                     who = programacion;
                     programacion.play()
                     animation(programacion.duration);
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(programacion.duration) * 1000);
                     setTimeout(() => {
                         window.open("https://drive.google.com/file/d/1rq5YmjYjmXemPJ6kV_ARqyB00MGSNy0T/view?usp=sharing", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=600,width=1300,height=1200");
@@ -309,8 +394,10 @@ function voz(texto) {
                     who = reserva;
                     reserva.play()
                     animation(reserva.duration);
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(reserva.duration) * 1000);
                     setTimeout(() => {
                         window.open("https://ccusalmona.com/reserva-de-espacios/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=600,width=1300,height=1200");
@@ -322,8 +409,10 @@ function voz(texto) {
                     who = maker;
                     maker.play()
                     animation(maker.duration);
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(maker.duration) * 1000);
                     setTimeout(() => {
                         question('maker', maker.duration * 1000)
@@ -335,8 +424,10 @@ function voz(texto) {
                     if (countf < 1) {
                         finalices.play()
                         animation(finalices.duration);
+                        annyang.pause();
                         setTimeout(() => {
                             speaking = false;
+                            annyang.resume();
                         }, parseInt(finalices.duration) * 1000);
                         countf++;
                     } else { }
@@ -344,8 +435,10 @@ function voz(texto) {
                 default:
                     who = noentendi;
                     noentendi.play()
+                    annyang.pause();
                     setTimeout(() => {
                         speaking = false;
+                        annyang.resume();
                     }, parseInt(noentendi.duration) * 1000);
                     animation(noentendi.duration);
                     break;
