@@ -21,6 +21,7 @@ function start() {
     setTimeout(() => {
         voz("saludo");
     }, 500)
+    how();
  }
 }
 
@@ -44,19 +45,22 @@ function evento(cadena) {
             break;
         case 'centrociencias':
             voz('centrociencias')
-            break
+            break;
         case 'reserva':
             voz('reserva')
-            break
+            break;
         case 'distrito':
             voz('distrito')
-            break
+            break;
         case 'programacion':
             voz('programacion')
-            break
+            break;
         case 'maker':
             voz('maker')
-            break
+            break;
+        case 'how':
+            voz('how')
+            break;
         default:
             voz('noentendi');
             break;
@@ -111,20 +115,20 @@ const comandos = {
         window.open("https://www.youtube.com/results?search_query=" + busqueda)
     },
 
-    "Rogelio salmona.": () => {
+    "(Rogelio salmona.)": () => {
         voz("rogelio");
     },
 
-    "Recorrido virtual.": () => {
+    "(Recorrido virtual.)": () => {
         voz("recorrido");
     },
 
     
-    "Maker Space.": () => {
+    "Espacio (Maker.)": () => {
         voz("maker");
     },
 
-    "Maker (Space).": () => {
+    "(Espacio) Maker.": () => {
         voz("maker");
     },
 
@@ -144,15 +148,15 @@ const comandos = {
         voz("buenosdias");
     },
 
-    "Centro de ciencias.": () => {
+    "(Centro de ciencia.)": () => {
         voz("centrociencias");
     },
 
-    "Distrito salmona.": () => {
+    "(Distrito salmona.)": () => {
         voz("distrito");
     },
 
-    "Programación semanal.": () => {
+    "(Programación semanal.)": () => {
         voz("programacion");
     },
 
@@ -166,6 +170,18 @@ const comandos = {
 
     "(Reserva) de (espacios).": () => {
         voz("reserva");
+    },
+
+    "¿Cómo funcionas?": () => {
+        voz("how");
+    },
+
+    "¿Cómo (funcionas)?": () => {
+        voz("how");
+    },
+
+    "¿Cómo (funciona)?": () => {
+        voz("how");
     },
 }
 
@@ -191,6 +207,7 @@ function voz(texto) {
     const programacion = new Audio('voice/programacion.mp3')
     const maker = new Audio('voice/maker.mp3')
     const nodisponible = new Audio('voice/nodisponible.mp3')
+    const how = new Audio('voice/how.mp3')
 
 
     centrociencias.onloadeddata = function () {
@@ -415,6 +432,41 @@ function voz(texto) {
                         countf++;
                     } else { }
                     break;
+
+                    case "how":
+                        who = how;
+                    who.play()
+                    animation(who.duration);
+                    annyang.abort();
+                        const tass = Swal.mixin({
+                            buttonsStyling: true
+                        })
+
+                        setTimeout(() => {
+                            tass.fire({
+
+                                title: 'Haz click en los botones o prueba a decir palabras como:',
+                                html:
+                                'Hola - Buenas tardes - Buenos días <br>'+
+                                '¿Qué eres? - ¿Quién te creó? - ¿Cómo te llamas?  <br>'+
+                                'Recorrido Virtual - Rogelio Salmona - Centro de Ciencia<br>' +
+                                'Distrito Salmona - Espacio Maker - Programacion Semanal - Reserva de espacios <br>'+
+                                '<b><br>Procura hablar fuerte y claro, además de dirigir tu voz hacia la camara ubicada arriba de la pantalla</b>',
+                                icon: 'info',
+                                showCancelButton: false,
+                                confirmButtonText: 'Ok',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    wait();
+                                } else if (
+                                    result.dismiss === Swal.DismissReason.cancel
+                                ) {
+                                    // Open tab
+                                }
+                            })
+                        }, 2000);
+                        break;
                 default:
                     who = noentendi;
                     noentendi.play()
@@ -581,6 +633,8 @@ function question(question, time) {
                     }
                 })
 
+               
+
             case "default":
                 setTimeout(() => {
                     voz("finalices")
@@ -612,9 +666,45 @@ var registrarInactividad = function () {
 
     function reiniciarTiempo() {
         clearTimeout(t);
-        t = setTimeout(tiempoExcedido, 60000)
+        t = setTimeout(tiempoExcedido, 80000)
         activo = true;
     }
 };
 
 registrarInactividad(); //Esto activa el contador
+
+function how(){
+    const tass = Swal.mixin({
+        buttonsStyling: true
+    })
+
+    setTimeout(() => {
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: true,
+          })
+          
+          Toast.fire({
+            html:
+            '<h4>Haz click en los botones o prueba a decir palabras como:</h4>'+
+            'Hola - Buenas tardes - Buenos días -'+
+            '¿Qué eres? - ¿Quién te creó? - ¿Cómo te llamas? -<br>'+
+            'Recorrido Virtual - Rogelio Salmona - Centro de Ciencia -<br>' +
+            'Distrito Salmona - Espacio Maker - Programacion Semanal - Reserva de espacios <br>'+
+            '<b><br>Procura hablar fuerte y claro, además de dirigir tu voz hacia la camara ubicada arriba de la pantalla</b>',
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonText: 'Ok',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                // Open tab
+            }
+        })
+    }, 2000);
+}
